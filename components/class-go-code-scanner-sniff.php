@@ -19,7 +19,7 @@ class GO_Code_Scanner_Sniff
 	public function __construct( $standards, $type, $args = array() )
 	{
 		$this->sniffer = __DIR__ . '/sniff.php';
-		$this->base_sniff_dir = preg_replace( '!wp-content/.*!', 'wp-content', __DIR__ );
+		$this->base_sniff_dir = realpath( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) . '/wp-content';
 
 		$this->standards = $standards;
 		$this->type = $type;
@@ -100,6 +100,9 @@ class GO_Code_Scanner_Sniff
 		{
 			return new WP_Error( 'go-code-scanner-no-target', 'A sniff cannot be executed when no target has been set', array() );
 		}//end if
+
+
+		// use this for MAMP: $command = '/Applications/MAMP/bin/php/php5.4.10/bin/php ' . $this->sniffer;
 
 		$command = 'php ' . $this->sniffer;
 		$command .= ' --standard=' . escapeshellarg( $this->standards );

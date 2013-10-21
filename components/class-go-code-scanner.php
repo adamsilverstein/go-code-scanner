@@ -10,7 +10,7 @@ class GO_Code_Scanner
 	 */
 	public function __construct()
 	{
-		$this->base_sniff_dir = preg_replace( '!wp-content/.*!', 'wp-content', __DIR__ );
+		$this->base_sniff_dir = realpath( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) . '/wp-content';
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
@@ -22,12 +22,12 @@ class GO_Code_Scanner
 	public function admin_enqueue_scripts()
 	{
 		$version = 1;
-		wp_register_style( 'go-code-scanner-admin', plugins_url( 'css/go-code-scanner.css', __FILE__ ), array(), $version );
+		wp_register_style( 'go-code-scanner-admin', plugins_url( 'go-code-scanner/components/css/go-code-scanner.css' ), array(), $version );
 
 		wp_enqueue_style( 'go-code-scanner-admin' );
 
-		wp_register_script( 'go-code-scanner', plugins_url( 'js/go-code-scanner.js', __FILE__ ), array(), $version, TRUE );
-		wp_register_script( 'go-code-scanner-behavior', plugins_url( 'js/go-code-scanner-behavior.js', __FILE__ ), array(), $version, TRUE );
+		wp_register_script( 'go-code-scanner', plugins_url( 'go-code-scanner/components/js/go-code-scanner.js' ), array(), $version, TRUE );
+		wp_register_script( 'go-code-scanner-behavior', plugins_url( 'go-code-scanner/components/js/go-code-scanner-behavior.js' ), array(), $version, TRUE );
 
 		wp_enqueue_script( 'go-code-scanner' );
 		wp_enqueue_script( 'go-code-scanner-behavior' );
